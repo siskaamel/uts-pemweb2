@@ -10,8 +10,12 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 crossorigin="anonymous">
 </head>
 <body>
+   
+<x-alerts></x-alerts>
 
- <x-navbar></x-navbar>
+<!-- <x-card></x-card> -->
+
+<!-- <x-navbar></x-navbar>
 
  <x-layout>
  <h3>Ini adalah halaman Homepage</h3>
@@ -19,7 +23,7 @@ crossorigin="anonymous">
 
  <div class="container-fluid">
  <h1>Ini adalah halaman homepage</h1>
- </div>
+ </div> -->
 
  <script
 src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
