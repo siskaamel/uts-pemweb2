@@ -11,19 +11,26 @@ crossorigin="anonymous">
 </head>
 <body>
    
-<x-alerts></x-alerts>
-
-<!-- <x-card></x-card> -->
-
-<!-- <x-navbar></x-navbar>
-
- <x-layout>
- <h3>Ini adalah halaman Homepage</h3>
+<x-layout>
+    <div class="row">
+    <h3>Categories</h3>
+    @foreach($categories as $category)
+    <div class="col-2">
+    <div class="card">
+    <img src="{{ $category['image'] }}" class="card-img-top" alt="...">
+    <div class="card-body">
+    <h5 class="card-title">{{ $category['name'] }}</h5>
+    <p class="card-text">
+    {{ $category['description'] }}
+    </p>
+    <a href="/category/{{ $category['slug'] }}" class="btn
+    btn-primary">Detail</a>
+    </div>
+    </div>
+    </div>
+    @endforeach
+  </div>
 </x-layout>
-
- <div class="container-fluid">
- <h1>Ini adalah halaman homepage</h1>
- </div> -->
 
  <script
 src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

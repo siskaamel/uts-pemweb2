@@ -1,48 +1,33 @@
 <?php
-
+use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\KeranjangController;
-use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductCategoryController;
 
+//kode baru diubah menjadi seperti ini
+Route::get('/', [HomepageController::class, 'index'])->name('home');
+Route::get('products', [HomepageController::class, 'products']);
+Route::get('product/{slug}', [HomepageController::class, 'product']);
+Route::get('categories',[HomepageController::class, 'categories']);
+Route::get('category/{slug}', [HomepageController::class, 'category']);
+Route::get('cart', [HomepageController::class, 'cart']);
+Route::get('checkout', [HomepageController::class, 'checkout']);
 
-Route::get('/shop', function () {
-    return ('Selamat datang di Toko Kami!');
+Route::group(['prefix'=>'dashboard'], function(){
+ Route::get('/',[DashboardController::class,'index'])->name('dashboard');
+ Route::resource('categories',ProductCategoryController::class);
+ Route::resource('products', \App\Http\Controllers\ProductController::class);
+})->middleware(['auth', 'verified']);
+
+Route::middleware(['auth'])->group(function () {
+ Route::redirect('settings', 'settings/profile');
+ Volt::route('settings/profile',
+'settings.profile')->name('settings.profile');
+ Volt::route('settings/password',
+'settings.password')->name('settings.password');
+ Volt::route('settings/appearance',
+'settings.appearance')->name('settings.appearance');
 });
 
-// Menampilkan daftar produk
-Route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
-
-// Menampilkan detail produk
-Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
-
-// Menambahkan produk ke keranjang
-Route::post('/keranjang/tambah', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
-
-// Melihat isi keranjang
-Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
-
-// Menghapus produk dari keranjang
-Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
-
-// Checkout
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::post('/checkout/proses', [CheckoutController::class, 'proses'])->name('checkout.proses');
-
-Route::get('/', function () {
-    return view('web.homepage');
-});
-
-// Route::view('dashboard', 'dashboard')
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
-
-// Route::middleware(['auth'])->group(function () {
-//     Route::redirect('settings', 'settings/profile');
-
-//     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
-//     Volt::route('settings/password', 'settings.password')->name('settings.password');
-//     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
-// });
-
-// require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';
